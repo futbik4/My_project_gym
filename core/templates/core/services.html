@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords"
+        content="услуги, фитнес, клуб, тренировки, групповые занятия, персональный тренер, Магнитогорск">
+    <meta name="description"
+        content="Услуги фитнес-клуба 'Энергия': тренажерный зал, групповые занятия, персональные тренировки и многое другое.">
+    <link rel="icon" href="https://img.icons8.com/?size=100&id=HOYvP6i4raxw&format=png&color=000000">
+    <title>Услуги - Фитнес-клуб "Энергия"</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <h1>Фитнес-клуб "Энергия"</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'core:home' %}">Главная</a></li>
+                <li><a href="{% url 'core:services' %}">Услуги</a></li>
+                <li><a href="{% url 'core:news' %}">Новости</a></li>
+                <li><a href="{% url 'core:contacts' %}">Контакты</a></li>
+                <li><a href="{% url 'core:about' %}">О нас</a></li>
+                
+                {% if user.is_authenticated %}
+                    <!-- Показать если пользователь вошел -->
+                    <li><span style="color: #4CAF50; font-weight: bold;">{{ user.username }}</span></li>
+                    <li><a href="{% url 'accounts:logout' %}" style="color: #ff6b6b;">Выйти</a></li>
+                    <li><a href="/admin/" style="color: #ff9800;">Админка</a></li>
+                {% else %}
+                    <!-- Показать если пользователь не вошел -->
+                    <li><a href="{% url 'accounts:login' %}" style="color: #4CAF50;">Войти</a></li>
+                    <li><a href="{% url 'accounts:register' %}" style="color: #2196F3;">Регистрация</a></li>
+                    <li><a href="{% url 'accounts:guest_login' %}" style="color: #9C27B0;">Гостевой вход</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="services">
+            <h2>Наши услуги</h2>
+            <p>Фитнес-клуб "Энергия" предлагает широкий спектр услуг для поддержания здоровья и достижения отличной
+                физической формы.</p>
+
+            <div class="service-list">
+                <div class="service-item">
+                    <img src="https://lesfitness.ru/upload/phpthumb/2/280_79d60ec7012ae5e3a4cacfc0d8cdcfe0.webp"
+                        alt="Тренажерный зал" width="272" height="160">
+                    <h3>Тренажерный зал</h3>
+                    <p>Современное оборудование, профессиональные инструкторы, индивидуальные программы.</p>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'core:memberships' %}" class="service-button">Выбрать абонемент</a>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}?next={% url 'core:memberships' %}" class="service-button">Войти для покупки</a>
+                    {% endif %}
+                </div>
+
+                <div class="service-item">
+                    <img src="https://niioz.ru/upload/iblock/f47/f47ea5e5f0c4e1c79353d3d5a50d42ab.jpeg"
+                        alt="Групповые занятия" width="272" height="160">
+                    <h3>Групповые занятия</h3>
+                    <p>Йога, пилатес, зумба, аэробика, силовые тренировки и многое другое.</p>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'core:memberships' %}" class="service-button">Выбрать абонемент</a>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}?next={% url 'core:memberships' %}" class="service-button">Войти для покупки</a>
+                    {% endif %}
+                </div>
+
+                <div class="service-item">
+                    <img src="https://pic.rutubelist.ru/video/70/6a/706aba95a49e184a06e4de9e245c406e.jpg"
+                        alt="Персональные тренировки" width="272" height="160">
+                    <h3>Персональные тренировки</h3>
+                    <p>Индивидуальный подход, разработка программы с учетом ваших целей и особенностей.</p>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'core:memberships' %}" class="service-button">Выбрать абонемент</a>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}?next={% url 'core:memberships' %}" class="service-button">Войти для покупки</a>
+                    {% endif %}
+                </div>
+
+                <div class="service-item">
+                    <img src="https://avatars.mds.yandex.net/i?id=28e1bf39edb6b15b991134dcdbc70fe9_l-10346227-images-thumbs&n=13"
+                        alt="SPA-коплекс" width="272" height="160">
+                    <h3>SPA-процедуры</h3>
+                    <p>Массаж, обертывания, сауна для расслабления и восстановления после тренировок.</p>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'core:memberships' %}" class="service-button">Выбрать абонемент</a>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}?next={% url 'core:memberships' %}" class="service-button">Войти для покупки</a>
+                    {% endif %}
+                </div>
+
+                <div class="service-item">
+                    <img src="https://cdn.culture.ru/images/aa41a52b-d365-5540-9b9b-a352ffd05bb9"
+                        alt="Консультации по питанию" width="272" height="160">
+                    <h3>Консультации по питанию</h3>
+                    <p>Разработка индивидуальных планов питания для достижения ваших целей.</p>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'core:memberships' %}" class="service-button">Выбрать абонемент</a>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}?next={% url 'core:memberships' %}" class="service-button">Войти для покупки</a>
+                    {% endif %}
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Фитнес-клуб "Энергия". Все права защищены.</p>
+    </footer>
+
+    <style>
+        .service-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .service-button:hover {
+            background-color: #45a049;
+        }
+        </style>
+
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="новости, фитнес, клуб, акции, мероприятия, события, Магнитогорск">
+    <meta name="description" content="Новости фитнес-клуба 'Энергия': акции, специальные предложения, мероприятия, важные события.">
+    <link rel="icon" href="https://img.icons8.com/?size=100&id=HOYvP6i4raxw&format=png&color=000000">
+    <title>Новости - Фитнес-клуб "Энергия"</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1>Фитнес-клуб "Энергия"</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'core:home' %}">Главная</a></li>
+                <li><a href="{% url 'core:services' %}">Услуги</a></li>
+                <li><a href="{% url 'core:news' %}">Новости</a></li>
+                <li><a href="{% url 'core:contacts' %}">Контакты</a></li>
+                <li><a href="{% url 'core:about' %}">О нас</a></li>
+                
+                {% if user.is_authenticated %}
+                    <!-- Показать если пользователь вошел -->
+                    <li><span style="color: #4CAF50; font-weight: bold;">{{ user.username }}</span></li>
+                    <li><a href="{% url 'accounts:logout' %}" style="color: #ff6b6b;">Выйти</a></li>
+                    <li><a href="/admin/" style="color: #ff9800;">Админка</a></li>
+                {% else %}
+                    <!-- Показать если пользователь не вошел -->
+                    <li><a href="{% url 'accounts:login' %}" style="color: #4CAF50;">Войти</a></li>
+                    <li><a href="{% url 'accounts:register' %}" style="color: #2196F3;">Регистрация</a></li>
+                    <li><a href="{% url 'accounts:guest_login' %}" style="color: #9C27B0;">Гостевой вход</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="news">
+            <h2>Новости и акции</h2>
+            <p>Будьте в курсе последних новостей и выгодных предложений фитнес-клуба "Энергия".</p>
+
+            <div class="news-list">
+
+                <div class="news-item">
+                    <img src="https://g.foolcdn.com/editorial/images/578333/gettyimages-1092303536.jpg" alt="Новая группа по йоге" width="549" height="366">
+                    <h3>Открыта новая группа по йоге для начинающих!</h3>
+                    <p>Приглашаем всех желающих на занятия йогой под руководством опытного инструктора.</p>
+                </div>
+
+                <div class="news-item">
+                    <img src="Images/TQ_on2a-UK0.jpg" alt="Скидка на абонемент" width="403" height="366">
+                    <h3>Скидка 20% на годовой абонемент!</h3>
+                    <p>Только до конца месяца! Успейте приобрести годовой абонемент со скидкой 20% и занимайтесь спортом выгодно.</p>
+                </div>
+
+                <div class="news-item">
+                    <img src="https://i.pinimg.com/736x/65/35/c6/6535c6ede6785b656b02f3024966be91.jpg" alt="Продукция спортивного питания" width="403" height="366">
+                    <h3>Наша продукция!</h3>
+                    <p>Будь здоровее и сильнее С "Энергией".</p>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Фитнес-клуб "Энергия". Все права защищены.</p>
+    </footer>
+
+</body>
+</html>

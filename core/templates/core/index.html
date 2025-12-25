@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="фитнес, клуб, спорт, здоровье, тренировки, Магнитогорск">
+    <meta name="description" content="Фитнес-клуб 'Энергия' - ваш путь к здоровью и отличной форме в Магнитогорске!">
+    <link rel="icon" href="https://img.icons8.com/?size=100&id=HOYvP6i4raxw&format=png&color=000000">
+    <link rel="stylesheet" href="/static/css/styles.css?v=2">
+    <title>Фитнес-клуб "Энергия"</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+    <!-- стиль -->
+    <style>
+        h1 {
+            color: #333;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+        <h1>Фитнес-клуб "Энергия"</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'core:home' %}">Главная</a></li>
+                <li><a href="{% url 'core:services' %}">Услуги</a></li>
+                <li><a href="{% url 'core:news' %}">Новости</a></li>
+                <li><a href="{% url 'core:contacts' %}">Контакты</a></li>
+                <li><a href="{% url 'core:about' %}">О нас</a></li>
+
+                {% if user.is_authenticated %}
+                <!-- Показать если пользователь вошел -->
+                <li><span style="color: #4CAF50; font-weight: bold;">{{ user.username }}</span></li>
+                <li><a href="{% url 'accounts:logout' %}" style="color: #ff6b6b;">Выйти</a></li>
+                <li><a href="/admin/" style="color: #ff9800;">Админка</a></li>
+                {% else %}
+                <!-- Показать если пользователь не вошел -->
+                <li><a href="{% url 'accounts:login' %}" style="color: #4CAF50;">Войти</a></li>
+                <li><a href="{% url 'accounts:register' %}" style="color: #2196F3;">Регистрация</a></li>
+                <li><a href="{% url 'accounts:guest_login' %}" style="color: #9C27B0;">Гостевой вход</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-wrapper">
+                <img src="https://static.vecteezy.com/system/resources/previews/045/658/844/non_2x/athlete-sport-design-illustration-art-vector.jpg"
+                    alt="Логотип" class="logo">
+                <div class="hero-text">
+                    <h2>Добро пожаловать в "Энергию"!</h2>
+                    <p>Мы поможем вам достичь ваших фитнес-целей. Персональные тренировки, групповые занятия,
+                        современное оборудование!</p>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'core:memberships' %}" class="button">Купить абонемент</a>
+                    {% else %}
+                    <a href="{% url 'accounts:login' %}?next={% url 'core:memberships' %}" class="button">Войти для
+                        покупки</a>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <section class="about">
+            <!-- стиль -->
+            <h2>Что мы предоставляем?</h2>
+            <p style="font-style: italic;">Фитнес-клуб "Энергия" - это команда профессионалов, современные залы и
+                индивидуальный подход к каждому клиенту. Мы предлагаем широкий спектр услуг для всех уровней подготовки.
+            </p>
+
+            <div class="features">
+                <div class="feature-item">
+                    <img src="https://avatars.mds.yandex.net/get-altay/1923723/2a0000016fc3384750c40dbb43da1a50fd09/XXXL"
+                        alt="Тренажерный зал" width="512px" height="341px">
+                    <h3>Современный тренажерный зал</h3>
+                    <p>Оборудование от ведущих мировых производителей.</p>
+                </div>
+                <div class="feature-item">
+                    <img src="https://blogs.klerk.ru/images/tmp/201810/96156a5682.jpg" alt="Групповые занятия"
+                        width="512px" height="341px">
+                    <h3>Разнообразные групповые программы</h3>
+                    <p>Пилатес, йога, зумба и многое другое!</p>
+                </div>
+                <div class="feature-item">
+                    <img src="https://t4.ftcdn.net/jpg/01/89/92/53/360_F_189925337_ZF6jxFsIBM8WNzwWlatC33vlWDBadav3.jpg"
+                        alt="Персональные тренировки" width="512px" height="341px">
+                    <h3>Персональные тренировки с профессионалами</h3>
+                    <p>Индивидуальный подход и максимальный результат.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Фитнес-клуб "Энергия". Все права защищены.</p>
+    </footer>
+
+</body>
+
+</html>

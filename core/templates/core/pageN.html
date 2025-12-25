@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="о нас, преимущества, фитнес, клуб, опыт, клиенты, отзывы, оборудование, мастерклассы, Магнитогорск">
+    <meta name="description" content="Узнайте о преимуществах фитнес-клуба 'Энергия': многолетний опыт, большая база клиентов, положительные отзывы, современное оборудование и интересные мероприятия.">
+    <link rel="icon" href="https://img.icons8.com/?size=100&id=HOYvP6i4raxw&format=png&color=000000">
+    <title>О клубе - Фитнес-клуб "Энергия"</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1>Фитнес-клуб "Энергия"</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'core:home' %}">Главная</a></li>
+                <li><a href="{% url 'core:services' %}">Услуги</a></li>
+                <li><a href="{% url 'core:news' %}">Новости</a></li>
+                <li><a href="{% url 'core:contacts' %}">Контакты</a></li>
+                <li><a href="{% url 'core:about' %}">О нас</a></li>
+                
+                {% if user.is_authenticated %}
+                    <!-- Показать если пользователь вошел -->
+                    <li><span style="color: #4CAF50; font-weight: bold;">{{ user.username }}</span></li>
+                    <li><a href="{% url 'accounts:logout' %}" style="color: #ff6b6b;">Выйти</a></li>
+                    <li><a href="/admin/" style="color: #ff9800;">Админка</a></li>
+                {% else %}
+                    <!-- Показать если пользователь не вошел -->
+                    <li><a href="{% url 'accounts:login' %}" style="color: #4CAF50;">Войти</a></li>
+                    <li><a href="{% url 'accounts:register' %}" style="color: #2196F3;">Регистрация</a></li>
+                    <li><a href="{% url 'accounts:guest_login' %}" style="color: #9C27B0;">Гостевой вход</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="about-club">
+            <h2>О фитнес-клубе "Энергия"</h2>
+
+            <div class="advantages">
+                <div class="advantage-card">
+                    <h3>Нам уже 10 лет</h3>
+                    <p>Не первый год работаем.</p>
+                </div>
+
+                <div class="advantage-card">
+                    <h3>Клиенты</h3>
+                    <p>У нас более 5 000 довольных клиентов.</p>
+                </div>
+
+                <div class="advantage-card">
+                    <h3>Коллектив</h3>
+                    <p>У нас опытные тренера с 10-летним стажем.</p>
+                </div>
+
+                <div class="advantage-card">
+                    <h3>Отзывы</h3>
+                    <p>У нас более 10 000 отличных отзывов.</p>
+                </div>
+
+            </div>
+
+            <h2>Наши преимущества</h2>
+            <ul>
+                <li>Современное и профессиональное оборудование от ведущих мировых производителей.</li>
+                <li>Регулярное проведение мастер-классов и семинаров с участием известных тренеров и экспертов в области фитнеса и здорового образа жизни.</li>
+                <li>Удобное расположение клуба и гибкий график работы.</li>
+                <li>Дружелюбная и мотивирующая атмосфера.</li>
+                <li>Индивидуальный подход к каждому клиенту.</li>
+                <li>Широкий выбор программ тренировок для всех уровней подготовки.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Фитнес-клуб "Энергия". Все права защищены.</p>
+    </footer>
+
+</body>
+</html>

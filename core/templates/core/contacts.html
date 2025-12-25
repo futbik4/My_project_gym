@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="контакты, адрес, телефон, email, фитнес, клуб, Магнитогорск">
+    <meta name="description"
+        content="Контактная информация фитнес-клуба 'Энергия': адрес, телефон, email, карта проезда.">
+    <link rel="icon" href="https://img.icons8.com/?size=100&id=HOYvP6i4raxw&format=png&color=000000">
+    <title>Контакты - Фитнес-клуб "Энергия"</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <h1>Фитнес-клуб "Энергия"</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'core:home' %}">Главная</a></li>
+                <li><a href="{% url 'core:services' %}">Услуги</a></li>
+                <li><a href="{% url 'core:news' %}">Новости</a></li>
+                <li><a href="{% url 'core:contacts' %}">Контакты</a></li>
+                <li><a href="{% url 'core:about' %}">О нас</a></li>
+                
+                {% if user.is_authenticated %}
+                    <!-- Показать если пользователь вошел -->
+                    <li><span style="color: #4CAF50; font-weight: bold;">{{ user.username }}</span></li>
+                    <li><a href="{% url 'accounts:logout' %}" style="color: #ff6b6b;">Выйти</a></li>
+                    <li><a href="/admin/" style="color: #ff9800;">Админка</a></li>
+                {% else %}
+                    <!-- Показать если пользователь не вошел -->
+                    <li><a href="{% url 'accounts:login' %}" style="color: #4CAF50;">Войти</a></li>
+                    <li><a href="{% url 'accounts:register' %}" style="color: #2196F3;">Регистрация</a></li>
+                    <li><a href="{% url 'accounts:guest_login' %}" style="color: #9C27B0;">Гостевой вход</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="contact-info">
+            <h2>Контактная информация</h2>
+
+            <p><strong>Адрес:</strong> г. Магнитогорск, ул. Несуществующая, д. 100</p>
+            <p><strong>Телефон:</strong> <a href="tel:+79991234567">+7 (999) 123-45-67</a></p>
+            <p><strong>Email:</strong> <a href="mailto:info@energymgn.ru">info@energymgn.ru</a></p>
+
+            <p>Мы всегда рады ответить на ваши вопросы и помочь вам в достижении ваших фитнес-целей!</p>
+        </section>
+        <section class="contact-info">
+            <h2>Остались вопросы? Задай его нам!</h2>
+            <form action="mailto:info@energymgn.ru" method="post" enctype="multipart/form-data">
+                <label for="phone">Укажите номер телефона:</label><br>
+                <input type="tel" id="phone" name="phone" pattern="[+]?[0-9]{10,15}"
+                    placeholder="Укажите в формате +7..." required><br><br>
+                <label for="topic">Тематика письма:</label><br>
+                <select id="topic" name="topic">
+                    <option value="Вопрос">Вопрос</option>
+                    <option value="Жалоба">Жалоба</option>
+                    <option value="Предложения">Предложения</option>
+                    <option value="Совместный проект">Совместный проект</option>
+                </select><br><br>
+                <label for="message">Сообщение:</label><br>
+                <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
+                <label for="file">Прикрепить файл:</label><br>
+                <input type="file" id="file" name="file"><br><br>
+                <label for="consent">Согласие на обработку персональных данных:</label>
+                <input type="checkbox" id="consent" name="consent" required>
+                <label for="consent">Согласен</label><br><br>
+                <button type="submit">Отправить письмо</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Фитнес-клуб "Энергия". Все права защищены.</p>
+    </footer>
+
+</body>
+
+</html>

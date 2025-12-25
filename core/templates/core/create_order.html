@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block title %}Оформление заказа - Фитнес-клуб "Энергия"{% endblock %}
+
+{% block content %}
+<div class="order-container">
+    <h2>Оформление заказа</h2>
+    
+    {% if existing_order %}
+        <div class="warning-message">
+            <p>У вас уже есть активный абонемент "{{ membership.name }}".</p>
+            <p><a href="{% url 'core:my_orders' %}">Посмотреть мои заказы</a></p>
+        </div>
+    {% else %}
+        <div class="order-summary">
+            <h3>Детали абонемента</h3>
+            <div class="membership-info">
+                <div class="info-row">
+                    <span class="label">Название:</span>
+                    <span class="value">{{ membership.name }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Описание:</span>
+                    <span class="value">{{ membership.description }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Длительность:</span>
+                    <span class="value">{{ membership.duration_days }} дней</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Цена:</span>
+                    <span class="value price">{{ membership.price }} руб.</span>
+                </div>
+            </div>
+            
+            <form method="post" class="order-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="agree_terms">
+                        <input type="checkbox" id="agree_terms" name="agree_terms" required>
+                        Я согласен с условиями обслуживания и политикой конфиденциальности
+                    </label>
+                </div>
+                
+                <div class="form-actions">
+                    <a href="{% url 'core:memberships' %}" class="btn-back">Назад</a>
+                    <button type="submit" class="btn-confirm">Подтвердить заказ</button>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+.order-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.warning-message {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.warning-message p {
+    margin: 10px 0;
+}
+
+.order-summary {
+    margin-top: 20px;
+}
+
+.membership-info {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.info-row {
+    display: flex;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.label {
+    font-weight: bold;
+    width: 120px;
+    color: #555;
+}
+
+.value {
+    flex: 1;
+    color: #333;
+}
+
+.value.price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.form-group {
+    margin: 25px 0;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.form-group input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.btn-back, .btn-confirm {
+    padding: 12px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-back {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-back:hover {
+    background-color: #5a6268;
+}
+
+.btn-confirm {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-confirm:hover {
+    background-color: #45a049;
+}
+
+.btn-confirm:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const checkbox = document.getElementById('agree_terms');
+    const confirmBtn = document.querySelector('.btn-confirm');
+    
+    function updateButton() {
+        confirmBtn.disabled = !checkbox.checked;
+    }
+    
+    checkbox.addEventListener('change', updateButton);
+    updateButton(); // Initial check
+});
+</script>
+{% endblock %}
