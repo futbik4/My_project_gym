@@ -50,13 +50,13 @@ def register_view(request):
     return render(request, 'accounts/register.html')
 
 def guest_login(request):
-    # Создаем или находим гостевого пользователя
+    # Просто создаем гостевого пользователя
     guest_user, created = User.objects.get_or_create(
-        username='guest_user',
+        username='guest',
         defaults={'is_active': True}
     )
     if created:
-        guest_user.set_password('guest_password_123')
+        guest_user.set_password('guest123')
         guest_user.save()
     
     login(request, guest_user)

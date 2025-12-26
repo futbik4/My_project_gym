@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="membership-footer">
-                {% if user.is_authenticated %}
+                {% if user.is_authenticated and user.username != 'guest_user' %}
                     <a href="{% url 'core:create_order' membership.id %}" class="btn-buy">Купить</a>
                 {% else %}
                     <a href="{% url 'accounts:login' %}?next={% url 'core:create_order' membership.id %}" 

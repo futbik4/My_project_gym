@@ -37,7 +37,11 @@ def memberships_list(request):
 
 @login_required
 def create_order(request, membership_id):
-    """Создание заказа (покупка абонемента)"""
+    # Проверка - если имя пользователя 'guest'
+    if request.user.username == 'guest':
+        messages.error(request, 'Гость не может покупать абонементы. Зарегистрируйтесь!')
+        return redirect('accounts:register')
+    
     membership = get_object_or_404(Membership, id=membership_id, is_active=True)
     
     # Если пользователь уже покупал этот абонемент
