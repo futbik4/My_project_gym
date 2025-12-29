@@ -23,20 +23,19 @@
                 <li><a href="{% url 'core:contacts' %}">Контакты</a></li>
                 <li><a href="{% url 'core:about' %}">О нас</a></li>
                 <li><a href="{% url 'core:memberships' %}" style="color: #FF5722;">Абонементы</a></li>
-                
                 {% if user.is_authenticated %}
-                    <li>
-                        <span style="color: {% if user.username == 'guest' %}#9C27B0{% else %}#4CAF50{% endif %}; font-weight: bold;">
-                            {{ user.username }}
-                            {% if user.username == 'guest' %}(гость){% endif %}
-                        </span>
-                    </li>
-                    <li><a href="{% url 'core:my_orders' %}">Мои заказы</a></li>
-                    <li><a href="{% url 'accounts:logout' %}" style="color: #ff6b6b;">Выйти</a></li>
+                <li>
+                    <span style="color: #9C27B0;">
+                        {{ user.username }}
+                        {% if user.username == 'guest' %}(гость){% endif %}
+                    </span>
+                </li>
+                <li><a href="{% url 'core:my_orders' %}">Мои заказы</a></li>
+                <li><a href="{% url 'accounts:logout' %}" style="color: #ff6b6b;">Выйти</a></li>
                 {% else %}
-                    <li><a href="{% url 'accounts:login' %}" style="color: #4CAF50;">Войти</a></li>
-                    <li><a href="{% url 'accounts:register' %}" style="color: #2196F3;">Регистрация</a></li>
-                    <li><a href="{% url 'accounts:guest_login' %}" style="color: #9C27B0;">Гостевой вход</a></li>
+                <li><a href="{% url 'accounts:login' %}" style="color: #af784c;">Войти</a></li>
+                <li><a href="{% url 'accounts:register' %}" style="color: #2196F3;">Регистрация</a></li>
+                <li><a href="{% url 'accounts:guest_login' %}" style="color: #9C27B0;">Гостевой вход</a></li>
                 {% endif %}
             </ul>
         </nav>

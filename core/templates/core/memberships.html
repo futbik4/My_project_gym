@@ -30,11 +30,20 @@
                 </div>
             </div>
             <div class="membership-footer">
-                {% if user.is_authenticated and user.username != 'guest_user' %}
-                    <a href="{% url 'core:create_order' membership.id %}" class="btn-buy">Купить</a>
+                {% if user.is_authenticated %}
+                    <!-- Проверяем оба имени гостя -->
+                    {% if user.username == 'guest' or user.username == 'guest_user' %}
+                        <button disabled class="btn-disabled">Гость не может покупать</button>
+                        <small style="color: #f44336; display: block; margin-top: 5px;">
+                            <a href="{% url 'accounts:register' %}" style="color: #2196F3;">
+                                Зарегистрируйтесь
+                            </a> для доступа к покупкам
+                        </small>
+                    {% else %}
+                        <a href="{% url 'core:create_order' membership.id %}" class="btn-buy">Купить</a>
+                    {% endif %}
                 {% else %}
-                    <a href="{% url 'accounts:login' %}?next={% url 'core:create_order' membership.id %}" 
-                       class="btn-buy">Войти для покупки</a>
+                    <a href="{% url 'accounts:login' %}" class="btn-buy">Войти для покупки</a>
                 {% endif %}
             </div>
         </div>

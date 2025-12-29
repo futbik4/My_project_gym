@@ -37,6 +37,7 @@ def memberships_list(request):
 
 @login_required
 def create_order(request, membership_id):
+    """Создание заказа (покупка абонемента)"""
     # Проверка - если имя пользователя 'guest'
     if request.user.username == 'guest':
         messages.error(request, 'Гость не может покупать абонементы. Зарегистрируйтесь!')
@@ -74,12 +75,22 @@ def create_order(request, membership_id):
 @login_required
 def order_detail(request, order_id):
     """Детальная информация о заказе"""
+    # Проверка на гостя
+    if request.user.username == 'guest':
+        messages.error(request, 'Гость не имеет доступа к заказам')
+        return redirect('core:home')
+    
     order = get_object_or_404(Order, id=order_id, user=request.user)
     return render(request, 'core/order_detail.html', {'order': order})
 
 @login_required
 def my_orders(request):
-    """Список заказов пользователя"""
+    """Страница с заказами пользователя"""
+    # Проверка на гостя
+    if request.user.username == 'guest':
+        messages.info(request, 'У гостя нет истории заказов')
+        return redirect('core:home')
+    
     orders = Order.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'core/my_orders.html', {'orders': orders})
 

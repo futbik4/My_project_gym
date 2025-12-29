@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}Детали заказа #{{ order.id }}{% endblock %}
+
+{% block content %}
+<div class="order-detail-container">
+    <h2>Заказ успешно оформлен!</h2>
+    
+    <div class="order-info">
+        <div class="info-card">
+            <h3>Информация о заказе</h3>
+            <p><strong>Номер заказа:</strong> #{{ order.id }}</p>
+            <p><strong>Дата оформления:</strong> {{ order.created_at|date:"d.m.Y H:i" }}</p>
+            <p><strong>Статус:</strong> <span class="status status-{{ order.status }}">{{ order.get_status_display }}</span></p>
+            <p><strong>Сумма:</strong> {{ order.total_price }} руб.</p>
+        </div>
+        
+        <div class="info-card">
+            <h3>Информация об абонементе</h3>
+            <p><strong>Название:</strong> {{ order.membership.name }}</p>
+            <p><strong>Описание:</strong> {{ order.membership.description }}</p>
+            <p><strong>Длительность:</strong> {{ order.membership.duration_days }} дней</p>
+        </div>
+    </div>
+    
+    <div class="order-actions">
+        <a href="{% url 'core:my_orders' %}" class="btn-action">📋 Мои заказы</a>
+        <a href="{% url 'core:memberships' %}" class="btn-action">🛒 Новый заказ</a>
+        <a href="{% url 'core:home' %}" class="btn-action">🏠 На главную</a>
+    </div>
+</div>
+
+<style>
+.order-detail-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.order-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.info-card {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #4CAF50;
+}
+
+.info-card h3 {
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.info-card p {
+    margin: 10px 0;
+    color: #555;
+}
+
+.status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-completed {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.order-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.btn-action {
+    padding: 12px 25px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.btn-action:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+</style>
+{% endblock %}

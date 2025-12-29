@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}Экспорт данных - Админ-панель{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <h2>📊 Экспорт данных в Excel</h2>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    
+    <form method="post" class="export-form">
+        {% csrf_token %}
+        
+        <div class="form-section">
+            <h3>1. Выберите таблицу для экспорта:</h3>
+            <select name="model" id="model-select" class="form-select" required>
+                <option value="">-- Выберите таблицу --</option>
+                {% for model in models %}
+                <option value="{{ model.app }}.{{ model.model }}">
+                    {{ model.name }} ({{ model.app }}.{{ model.model }})
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-section">
+            <h3>2. Выберите поля для экспорта:</h3>
+            <div id="fields-container">
+                <p class="text-muted">Сначала выберите таблицу</p>
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn-export">📥 Скачать Excel файл</button>
+            <a href="/admin/" class="btn-back">Вернуться в админку</a>
+        </div>
+    </form>
+</div>
+
+<style>
+.admin-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.form-section {
+    margin: 25px 0;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.form-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn-export {
+    padding: 12px 30px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    flex: 1;
+}
+
+.btn-back {
+    padding: 12px 30px;
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.btn-export:hover {
+    background-color: #45a049;
+}
+
+.btn-back:hover {
+    background-color: #5a6268;
+}
+
+.field-checkbox {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+    padding: 8px;
+    background: white;
+    border-radius: 4px;
+}
+
+.field-checkbox input {
+    margin-right: 10px;
+}
+</style>
+
+<script>
+// Поля для каждой модели
+const modelFields = {
+    'core.Membership': ['id', 'name', 'description', 'price', 'duration_days', 'is_active', 'created_at', 'updated_at'],
+    'core.Order': ['id', 'user', 'membership', 'status', 'total_price', 'created_at', 'updated_at'],
+    'core.Review': ['id', 'user', 'membership', 'rating', 'comment', 'is_approved', 'created_at', 'updated_at'],
+    'auth.User': ['id', 'username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active', 'date_joined'],
+    'accounts.Profile': ['id', 'user', 'phone_number', 'birth_date', 'bio', 'avatar']
+};
+
+document.getElementById('model-select').addEventListener('change', function() {
+    const model = this.value;
+    const container = document.getElementById('fields-container');
+    
+    if (model && modelFields[model]) {
+        let html = '<div class="fields-list">';
+        modelFields[model].forEach(field => {
+            html += `
+            <div class="field-checkbox">
+                <input type="checkbox" name="fields" value="${field}" id="field_${field}" checked>
+                <label for="field_${field}">${field}</label>
+            </div>`;
+        });
+        html += '</div>';
+        container.innerHTML = html;
+    } else {
+        container.innerHTML = '<p class="text-muted">Сначала выберите таблицу</p>';
+    }
+});
+</script>
+{% endblock %}
