@@ -9,10 +9,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&bky)56ei=!opsio$yln3)@$#-l#68y-y%)1h6143g14q*&=tp'
+SECRET_KEY = os.getenv('SECRET_KEY', os.getenv('DJANGO_SECRET_KEY', 'django-insecure-fallback-key'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', '0') == '1' or os.getenv('DJANGO_DEBUG', '0') == '1'
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
 
@@ -69,8 +69,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'gym_db',
         'USER': 'gym_user',
-        'PASSWORD': 'gym_password',
-        'HOST': 'db',  # Имя сервиса из docker-compose.yml
+        'PASSWORD': os.getenv('DB_PASSWORD', 'gym_password'),
+        'HOST': 'db',  
         'PORT': '5432',
     }
 }
